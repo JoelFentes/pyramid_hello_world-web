@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pyramid + Jinja2</title>
+  <link rel="stylesheet" href="{{ request.static_url('app:static/css/style.css') }}">
+</head>
+<body>
+  <section class="container">
+    <h1>Hello <span id="nameSpan">World</span>!</h1>
+  </section>
+
+  <script>
+    const nomesList = {{ nomes | tojson | safe }};
+    const coresList = {{ cores_body | tojson | safe }};
+    const nameSpan = document.getElementById("nameSpan");
+    const body = document.body;
+
+    let index = 0;
+    let delay = 2000;
+
+    nameSpan.classList.remove("animar");
+
+    setTimeout(() => {
+      function animar() {
+        if (index < nomesList.length) {
+          nameSpan.classList.remove("animar");
+          void nameSpan.offsetWidth;
+
+          nameSpan.textContent = nomesList[index];
+          body.style.backgroundColor = coresList[index];  
+          nameSpan.classList.add("animar");
+
+          index++;
+          delay = Math.max(300, delay - 50);
+          setTimeout(animar, delay);
+        }
+      }
+      animar();
+    }, delay);
+  </script>
+</body>
+</html>

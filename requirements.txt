@@ -1,0 +1,4 @@
+-e .
+pyramid
+pyramid_jinja2
+waitress
